@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Nest;
+using System;
 using System.Collections.Generic;
-using Nest;
-
 
 namespace WebApplicationNest.Models
 {
@@ -12,7 +11,6 @@ namespace WebApplicationNest.Models
         public TicketService(IElasticClient client)
         {
             _client = client;
-
         }
 
         public IEnumerable<Ticket> Find()
@@ -23,7 +21,8 @@ namespace WebApplicationNest.Models
 
         public IEnumerable<Ticket> Find(string searchterm)
         {
-            throw new NotImplementedException();
+            var result = _client.Search<Ticket>(s => s.Query(q => q.Term(c => c.Field(t => t.Body).Value(searchterm))));
+            return result.Documents;
         }
 
         public Ticket Post(Ticket ticket)
@@ -41,7 +40,7 @@ namespace WebApplicationNest.Models
 
         public void Delete(Guid ticketId)
         {
-            throw new NotImplementedException();
+            _client.Delete<Ticket>(ticketId);
         }
     }
 }

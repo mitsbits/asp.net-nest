@@ -3,7 +3,6 @@
     ViewData["Title"] = "Tickets";
 }
 
-
 <table class="table">
     <thead>
         <tr>
@@ -24,7 +23,7 @@
                 <td>@ticket.Subject</td>
                 <td>@ticket.Body</td>
                 <td>@ticket.ReportedOn.ToLocalTime().ToString("d/M/yy HH:mm:ss")</td>
-                <td></td>
+                <td><a class="btn btn-danger" href="@Url.Action("delete", new { id = ticket.Id })">Delete</a></td>
             </tr>
         }
     </tbody>

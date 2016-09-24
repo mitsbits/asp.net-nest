@@ -11,11 +11,11 @@
         @if (Model.Id == Guid.Empty)
         {
             <label asp-for="Subject"></label>
-            <input asp-for="Subject" class="form-control"/>
+            <input asp-for="Subject" class="form-control" />
         }
         else
         {
-            <input type="hidden" asp-for="Subject"/>
+            <input type="hidden" asp-for="Subject" />
             <label>@Model.Subject</label>
         }
     </div>

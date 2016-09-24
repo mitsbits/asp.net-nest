@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Nest;
+using System;
 using WebApplicationNest.Models;
 
 namespace WebApplicationNest
@@ -14,6 +11,7 @@ namespace WebApplicationNest
         {
             return new ElasticClient(ConnectionSettings);
         }
+
         private static IndexNameResolver GetResolver()
         {
             return new IndexNameResolver(ConnectionSettings);
@@ -29,7 +27,6 @@ namespace WebApplicationNest
                 return settings;
             }
         }
-
 
         public static void ConfigureElatic(this IServiceCollection services)
         {

@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using WebApplicationNest.Models;
 
 namespace WebApplicationNest.Controllers
@@ -13,25 +13,27 @@ namespace WebApplicationNest.Controllers
             _tickets = tickets;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string q)
         {
-            return View(_tickets.Find());
+            return View(string.IsNullOrWhiteSpace(q) ? _tickets.Find() : _tickets.Find(q));
         }
+
         public IActionResult Details(string id)
         {
             var entity = (string.IsNullOrWhiteSpace(id)) ? new Ticket() : _tickets.Get(Guid.Parse(id));
             return View(entity);
         }
+
         [HttpPost]
         public IActionResult Post(Ticket entity)
         {
             var model = _tickets.Post(entity);
-            return RedirectToAction("details", new {id = model.Id});
+            return RedirectToAction("details", new { id = model.Id });
         }
 
-        public IActionResult Post(string id)
+        public IActionResult Delete(string id)
         {
-             _tickets.Delete(Guid.Parse(id));
+            _tickets.Delete(Guid.Parse(id));
             return RedirectToAction("index");
         }
     }

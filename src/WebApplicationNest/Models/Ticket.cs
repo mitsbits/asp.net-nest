@@ -2,7 +2,6 @@
 
 namespace WebApplicationNest.Models
 {
-
     public class Ticket
     {
         public Ticket()
@@ -10,6 +9,7 @@ namespace WebApplicationNest.Models
             Id = Guid.Empty;
             Priority = Priority.Low;
         }
+
         public Guid Id { get; set; }
         public string Subject { get; set; }
         public string Body { get; set; }
