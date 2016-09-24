@@ -1,6 +1,8 @@
 ﻿using Nest;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace WebApplicationNest.Models
 {
@@ -16,13 +18,18 @@ namespace WebApplicationNest.Models
         public IEnumerable<Ticket> Find()
         {
             var result = _client.Search<Ticket>();
-            return result.Documents;
+            return result.Documents.OrderByDescending(x => x.ReportedOn);
         }
 
         public IEnumerable<Ticket> Find(string searchterm)
         {
-            var result = _client.Search<Ticket>(s => s.Query(q => q.Term(c => c.Field(t => t.Body).Value(searchterm))));
-            return result.Documents;
+ 
+            var result = _client.Search<Ticket>(s => s
+                .Query(q=> 
+                    q.Term(c => c.Field(t => t.Body).Value(searchterm)) || 
+                    q.Term(c => c.Field(t => t.Subject).Value(searchterm))));
+
+            return result.Documents.OrderByDescending(x=>x.ReportedOn);
         }
 
         public Ticket Post(Ticket ticket)
