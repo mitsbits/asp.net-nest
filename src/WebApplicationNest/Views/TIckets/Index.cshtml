@@ -1,0 +1,31 @@
+﻿@model IEnumerable<WebApplicationNest.Models.Ticket>
+@{
+    ViewData["Title"] = "Tickets";
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Priority</th>
+            <th>Subject</th>
+            <th>Body</th>
+            <th>Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ticket in Model.OrderByDescending(x => x.ReportedOn))
+        {
+            <tr>
+                <td><a href="@Url.Action("details", "tickets", new {id = ticket.Id})">@ticket.Id</a>   </td>
+                <td>@ticket.Priority</td>
+                <td>@ticket.Subject</td>
+                <td>@ticket.Body</td>
+                <td>@ticket.ReportedOn.ToLocalTime().ToString("d/M/yy HH:mm:ss")</td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
